@@ -115,4 +115,3 @@ ggsave(fig_pool, filename = "/Fig/fig_pool_return2.pdf", width = 9*1.5, height =
 
 
 
-
