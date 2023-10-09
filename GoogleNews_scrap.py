@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Webscrape: Google News
+Web-scrapping: Google News
 
-Created on Tue Mar 28 12:47:38 2023
-
-@author: Haiqin Liu
+@author: Eveline Chupei Zhang
 """
 
 import numpy as np
