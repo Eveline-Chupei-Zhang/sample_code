@@ -1,10 +1,11 @@
-********************************************************************************
-***************************** LP-GIV estimate **********************************
-*****************************   Oct 5, 2023  ***********************************
-********************************************************************************
+*****************************************************************************************
+*********************************** LP-GIV estimate *************************************
+*******************************  Eveline Chupei Zhang  **********************************
+*****************************************************************************************
+
 clear all
 set more off
-global root "E:\Dropbox\Chupei_GIV"
+global root "/Chupei_GIV/"
 cd "$root"
 
 foreach xxx in "presetting"{
@@ -12,7 +13,6 @@ global GFC_name "Global Financial Cycle"
 global VIX_name "VIX"
 global GLBIF_name "Global Inflow"
 global GLBDCRT_name "Global Credit"
-global RA_name "Global Risk Aversion"
 global UNC_name "Global Uncertainty"
 global MSCI_name "MSCI Global"
 global PCM_name "Commodity Price"
@@ -34,7 +34,7 @@ global lags 8
 global vars "IP PCE TS PCM EBP FFR LEVUS GFC GLBIP" // GIVBank
 
 
-use TempFiles/LeverageFactorv2,replace
+use LeverageFactor,replace
 gen mdate=ym(year(dofq(qdate)),1) if quarter(dofq(qdate))==1
 replace mdate=ym(year(dofq(qdate)),4) if quarter(dofq(qdate))==2
 replace mdate=ym(year(dofq(qdate)),7) if quarter(dofq(qdate))==3
@@ -53,7 +53,8 @@ rename ipo ZT
 save TempFiles/ZT,replace
 
 
-import excel using TempFiles/bpssGFC_GIV.xlsx,firstrow clear
+
+import excel using bpssGFC_GIV.xlsx,firstrow clear
 gen date=date(Date,"YMD"),a(Date)
 gen mdate=mofd(date),a(date)
 egen rowmiss=rowmiss($vars )
@@ -68,6 +69,7 @@ foreach vv in $vars{
 }
 
 tsset mdate,m
+
 
 gen horizon=_n-1 if _n<=$hor +1
 
