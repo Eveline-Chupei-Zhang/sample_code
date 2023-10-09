@@ -1,8 +1,14 @@
+# -- utf-8 --#
+# -- Dynamic DID & Figures-- #
+# -- author: Chupei Zhang -- #
+
+
 
 # Import dataset
 library(lubridate)
 
-df_DID_coin_exchange <- fread("~/Dropbox/crypto_exchanges/dataset/final_coin_exchange_level.csv") %>%
+
+df_DID_coin_exchange <- fread("~/dataset/final_coin_exchange_level.csv") %>%
   tibble() %>%
   select(-listing_day_BINANCEUS, -listing_day_BITFINEX,
          -listing_day_BITSTAMP, -listing_day_FTX,
@@ -17,6 +23,7 @@ df_DID_coin_exchange <- fread("~/Dropbox/crypto_exchanges/dataset/final_coin_exc
 # pre and post 30-day window (5 days per period)
 breaks <- c(-Inf, seq(-30, 30, 1) ,Inf)
 levels <- c("Other", seq(-30, 30, 1))
+
 
 # Binance
 did_volume_Binance_dynamic <- feols(data = df_DID_coin_exchange %>%
@@ -44,6 +51,7 @@ results_Binance_dynamic <-
     labs(x = "Distance to listing day", y = "Coefficients on Return")  +
     ggtitle("Binance(controlling for lagged variable)")
 )
+
 # Coinbase
 did_volume_Coinbase_dynamic <- feols(data = df_DID_coin_exchange %>%
                                        group_by(exchange, coin) %>%
@@ -70,6 +78,7 @@ results_Coinbase_dynamic <-
     labs(x = "Distance to listing day", y = "Coefficients on Return")  +
     ggtitle("Coinbase(controlling for lagged variable)")
 )
+
 # Pool
 did_volume_pool_dynamic <- feols(data = df_DID_coin_exchange %>%
                                    group_by(exchange, coin) %>%
@@ -97,7 +106,13 @@ results_pool_dynamic <-
     ggtitle("Pool(controlling for lagged variable)")
 )
 
+
+
 #final <- (fig_Binance | fig_Coinbase | fig_pool)
-ggsave(fig_Binance, filename = "/Users/chupei.zhang/Dropbox/crypto_exchanges/Fig/fig_Binance_return2.pdf", width = 9*1.5, height = 3*1.5)
-ggsave(fig_Coinbase, filename = "/Users/chupei.zhang/Dropbox/crypto_exchanges/Fig/fig_Coinbase_return2.pdf", width = 9*1.5, height = 3*1.5)
-ggsave(fig_pool, filename = "/Users/chupei.zhang/Dropbox/crypto_exchanges/Fig/fig_pool_return2.pdf", width = 9*1.5, height = 3*1.5)
+ggsave(fig_Binance, filename = "/Fig/fig_Binance_return2.pdf", width = 9*1.5, height = 3*1.5)
+ggsave(fig_Coinbase, filename = "/Fig/fig_Coinbase_return2.pdf", width = 9*1.5, height = 3*1.5)
+ggsave(fig_pool, filename = "/Fig/fig_pool_return2.pdf", width = 9*1.5, height = 3*1.5)
+
+
+
+
